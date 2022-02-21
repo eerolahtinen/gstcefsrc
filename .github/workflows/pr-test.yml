@@ -44,4 +44,4 @@ jobs:
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1920x1080x60
-          run: gst-launch-1.0 \ cefbin name=cef cefsrc::url="https://soundcloud.com/platform/sama" \ cef.video ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! xvimagesink \ cef.audio ! audioconvert ! audiomixer ! autoaudiosink
+          run: xvfb-run --server-args="-screen 0 1920x1080x60" gst-launch-1.0 \ cefbin name=cef cefsrc::url="https://soundcloud.com/platform/sama" \ cef.video ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! xvimagesink \ cef.audio ! audioconvert ! audiomixer ! autoaudiosink

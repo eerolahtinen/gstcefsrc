@@ -40,7 +40,8 @@ jobs:
           cd build
           make -j
       - name: Run headless test
-        uses: GabrielBB/xvfb-action@v1.6
+        uses: GabrielBB/xvfb-action@v1
         with:
+          working-directory: ./$GST_PLUGIN_PATH
           options: -screen 0 1920x1080x60
           run: gst-launch-1.0 -e \ cefsrc url="https://soundcloud.com/platform/sama" ! \ video/x-raw, width=1920, height=1080, framerate=60/1 ! \ cefdemux name=demux ! queue ! videoconvert ! \ queue max-size-bytes=0 max-size-buffers=0 max-size-time=3000000000 ! x264enc ! queue ! \ mp4mux name=muxer ! filesink location='test.mp4' \ audiotestsrc do-timestamp=true is-live=true  volume=0.0 ! audiomixer name=mix ! \ queue max-size-bytes=0 max-size-buffers=0 max-size-time=3000000000 ! audioconvert ! \ audiorate ! audioresample ! faac bitrate=128000 ! queue ! muxer. \ demux. ! queue ! mix.
